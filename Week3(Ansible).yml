@@ -1,0 +1,93 @@
+
+
+
+
+
+install pack
+
+
+---
+ - name: Playbook to install Apache
+   hosts: localhost
+   become: true
+   tasks: 
+    - name: Ansible apt install Apache
+      apt:
+        name: apache2
+        state: present
+
+
+remove
+
+---
+ - name: Playbook to install Apache
+   hosts: localhost
+   become: true
+   tasks: 
+    - name: Ansible apt install Apache
+      apt:
+        name: apache2
+        state: absent
+
+
+directory
+
+
+
+---
+- hosts: localhost
+  become: true
+  tasks:
+     - name: create directory
+       file:
+           path=/tmp/test1
+           state=directory
+
+
+copy content
+
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Copy content to file
+    copy: content="Hiiiiiiii \n" dest=/tmp/test1.txt
+
+
+
+debug 
+
+---
+- hosts: localhost
+  gather_facts: false
+  vars:
+    name: kumar
+    group: cse
+  tasks: 
+    - name: print msg usig debug module
+      debug:
+         msg: "{{name}} and {{group}}"
+
+file
+
+---
+- hosts: localhost
+  become: true
+  tasks:
+     - name: create file
+       file:
+          path=/tmp/test1.txt
+          state=touch 
+
+shell and reg
+
+---
+- hosts: localhost
+  tasks:
+    - name: Playbook to use shell and register
+      shell: uptime -p
+      register: sys
+
+    - name: print uptime 
+      debug:
+        msg: "{{sys.stdout}}"
